@@ -1,18 +1,30 @@
 
         function calculateAverage(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    
-    const number1 = parseFloat(document.getElementById('num1').value) || 0;
-    const number2 = parseFloat(document.getElementById('num2').value) || 0;
-    const number3 = parseFloat(document.getElementById('num3').value) || 0;
-    const number4 = parseFloat(document.getElementById('num4').value) || 0;
+            // Get all input values
+            const inputs = [
+                document.getElementById('num1').value,
+                document.getElementById('num2').value,
+                document.getElementById('num3').value,
+                document.getElementById('num4').value
+            ];
 
-   
+            // Filter out empty strings and convert to numbers
+            const validNumbers = inputs
+                .filter(val => val.trim() !== '')
+                .map(val => parseFloat(val))
+                .filter(num => !isNaN(num));
 
-    const average =(number1 + number2 + number3 + number4) / 4;
+            if (validNumbers.length === 0) {
+                document.getElementById('result').innerText = "Please enter at least one number.";
+                return;
+            }
 
-   document.getElementById('result').innerText = `Average: ${average.toFixed(2)}`;
+            const sum = validNumbers.reduce((a, b) => a + b, 0);
+            const average = sum / validNumbers.length;
+
+            document.getElementById('result').innerText = `Average: ${average.toFixed(2)}`;
         }
 
 
